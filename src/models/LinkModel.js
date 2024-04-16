@@ -10,6 +10,7 @@ const linkSchema = new mongoose.Schema(
     actualLink: {
       type: String,
       required: [true, "The link is required"],
+      // regex
       match: [
         /^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)/,
         "The link must be a valid link",
@@ -18,7 +19,6 @@ const linkSchema = new mongoose.Schema(
     shortCode: {
       type: String,
       unique: true,
-      default: generateShortCode(),
     },
     clicks: {
       type: Number,
@@ -26,14 +26,16 @@ const linkSchema = new mongoose.Schema(
     },
   },
   {
+    // it automatically update createdAt and updatedAt
     timestamps: true,
+    // allows us to create a virtual code example shortlink. shortlink is not in the schema
     toJSON: { virtuals: true },
     toObject: { virtuals: true },
   }
 );
 
 linkSchema.virtual("shortLink").get(function () {
-  return `http://localhost:4000/${this.shortCode}`;
+  return `http://localhost:4000/links/${this.shortCode}`;
 });
 
 const Link = mongoose.model("Link", linkSchema);

@@ -13,8 +13,15 @@ router.post("/api/users/register", async (req, res) => {
   req.body.password = hashedPassword;
 
   const user = await User.create(req.body);
+  console.log(user);
 
-  res.status(201).json({ user: user });
+  const token = jwt.sign({ id: user._id }, "secret", { expiresIn: "30d" });
+
+  console.log(token);
+
+  // const user = await User.create(req.body);
+
+  res.status(201).json({ token: token });
 });
 
 router.post("/api/users/login", async (req, res) => {
@@ -51,8 +58,8 @@ router.post("/api/users/login", async (req, res) => {
 
 router.get("/logout", function (req, res, next) {
   // If the user is loggedin
-  if (req.session.loggedin) {
-    req.session.loggedin = false;
+  if (req.token.loggedin) {
+    req.token.loggedin = false;
     res.redirect("/");
   } else {
     // Not logged in

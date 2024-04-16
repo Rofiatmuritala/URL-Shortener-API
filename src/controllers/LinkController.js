@@ -1,10 +1,11 @@
 import Link from "../models/LinkModel.js";
 import Links from "../models/LinkModel.js";
+import { generateShortCode } from "../utils/generateShortCode.js";
 
 export const getAllLinks = async (req, res, next) => {
   try {
-    const Link = await Links.find();
-    res.json({ msg: "This is getting the project", Link: Link });
+    const links = await Links.find();
+    res.json({ msg: "This is getting the project", links: links });
   } catch (error) {
     next(error);
   }
@@ -12,6 +13,7 @@ export const getAllLinks = async (req, res, next) => {
 
 export const createShortenedUrl = async (req, res, next) => {
   try {
+    req.body.shortCode = generateShortCode();
     const Link = await Links.create(req.body);
     res.json({ msg: "This is getting the project", Link: Link });
   } catch (error) {

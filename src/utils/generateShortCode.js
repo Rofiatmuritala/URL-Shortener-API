@@ -7,6 +7,6 @@ export const generateShortCode = (length = 7) => {
     const randomIndex = Math.floor(Math.random() * characters.length);
     randomString += characters.charAt(randomIndex);
   }
-
+  // pass to the next ... to use
   return randomString;
 };
