@@ -1,4 +1,4 @@
-import User from "../models/users.js";
+import User from "../models/usersModel.js";
 import jwt from "jsonwebtoken";
 
 export const usersRouteMiddleware = async (req, res, next) => {
@@ -25,7 +25,7 @@ export const usersRouteMiddleware = async (req, res, next) => {
       error.statusCode = 401;
       return next(error);
     }
-
+    req.user = user;
     next();
   } catch (error) {
     next(error);

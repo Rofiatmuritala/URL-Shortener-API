@@ -5,10 +5,11 @@ import {
   getAllLinks,
   visitLink,
 } from "../controllers/LinkController.js";
+import { usersRouteMiddleware } from "../middlewares/userMiddleware.js";
 
 const router = Router();
 
-router.get("/links", getAllLinks);
+router.get("/links", usersRouteMiddleware, getAllLinks);
 router.post("/links", createShortenedUrl);
 router.get("/links/:shortCode", visitLink);
 
