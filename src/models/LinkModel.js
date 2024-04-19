@@ -20,10 +20,10 @@ const linkSchema = new mongoose.Schema(
       type: String,
       unique: true,
     },
-    clicks: {
-      type: Number,
-      default: 0,
-    },
+    // clicks: {
+    //   type: Number,
+    //   default: 0,
+    // },
   },
   {
     // it automatically update createdAt and updatedAt
@@ -36,6 +36,13 @@ const linkSchema = new mongoose.Schema(
 
 linkSchema.virtual("shortLink").get(function () {
   return `http://localhost:4000/links/${this.shortCode}`;
+});
+
+// Define a virtual field for clicks
+linkSchema.virtual("clicks", {
+  ref: "Click",
+  localField: "_id",
+  foreignField: "link",
 });
 
 const Link = mongoose.model("Link", linkSchema);
