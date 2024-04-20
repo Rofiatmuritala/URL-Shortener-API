@@ -5,6 +5,7 @@ export const usersRouteMiddleware = async (req, res, next) => {
   try {
     let token;
 
+    // Check if the user or the request (frontend) has a token in the authorization
     if (
       req.headers.authorization &&
       req.headers.authorization.startsWith("Bearer")
@@ -18,13 +19,14 @@ export const usersRouteMiddleware = async (req, res, next) => {
 
     const decodedUser = jwt.verify(token, "secret");
 
-    const user = await User.findById(decodedUser.id);
+    const user = await User.findById(decodedUser.id).select("-password");
 
     if (!user) {
       const error = new Error("Authentication Required");
       error.statusCode = 401;
       return next(error);
     }
+
     req.user = user;
     next();
   } catch (error) {

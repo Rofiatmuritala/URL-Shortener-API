@@ -2,6 +2,8 @@ import express, { Router } from "express";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/usersModel.js";
+import { userMeHandler } from "../controllers/userController.js";
+import { usersRouteMiddleware } from "../middlewares/userMiddleware.js";
 
 const router = Router();
 
@@ -55,6 +57,8 @@ router.post("/api/users/login", async (req, res) => {
 
   res.status(201).json({ token: token });
 });
+
+router.get("/api/users/me", usersRouteMiddleware, userMeHandler);
 
 router.get("/logout", function (req, res, next) {
   // If the user is loggedin
