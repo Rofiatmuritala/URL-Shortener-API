@@ -27,7 +27,9 @@ router.post("/api/users/register", async (req, res) => {
 });
 
 router.post("/api/users/login", async (req, res) => {
-  const user = await User.findOne({ email: req.body.email });
+  const user = await User.findOne({ email: req.body.email }).select(
+    "+password"
+  );
 
   console.log(user);
 

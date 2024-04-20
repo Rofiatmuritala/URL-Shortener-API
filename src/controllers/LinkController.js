@@ -5,8 +5,16 @@ import DeviceDetector from "device-detector-js";
 
 export const getAllLinks = async (req, res, next) => {
   try {
-    const links = await Links.find().populate("clicks");
-    res.json({ msg: "This is getting the project", links: links });
+    const user = req.user;
+
+    const links = await Links.find({ user: user._id })
+      .populate("clicks")
+      .populate("user");
+
+    res.json({
+      count: links.length,
+      links: links,
+    });
   } catch (error) {
     next(error);
   }
@@ -14,7 +22,11 @@ export const getAllLinks = async (req, res, next) => {
 
 export const createShortenedUrl = async (req, res, next) => {
   try {
+    const user = req.user;
+
     req.body.shortCode = generateShortCode();
+    req.body.user = user._id;
+
     const Link = await Links.create(req.body);
     res.json({ msg: "This is getting the project", Link: Link });
   } catch (error) {

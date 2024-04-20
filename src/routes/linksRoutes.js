@@ -10,7 +10,7 @@ import { usersRouteMiddleware } from "../middlewares/userMiddleware.js";
 const router = Router();
 
 router.get("/links", usersRouteMiddleware, getAllLinks);
-router.post("/links", createShortenedUrl);
+router.post("/links", usersRouteMiddleware, createShortenedUrl);
 router.get("/links/:shortCode", visitLink);
 
 export default router;

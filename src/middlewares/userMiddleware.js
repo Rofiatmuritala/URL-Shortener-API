@@ -19,7 +19,7 @@ export const usersRouteMiddleware = async (req, res, next) => {
 
     const decodedUser = jwt.verify(token, "secret");
 
-    const user = await User.findById(decodedUser.id).select("-password");
+    const user = await User.findById(decodedUser.id);
 
     if (!user) {
       const error = new Error("Authentication Required");

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Schema } from "mongoose";
 import { generateShortCode } from "../utils/generateShortCode.js";
 
 const linkSchema = new mongoose.Schema(
@@ -19,6 +19,11 @@ const linkSchema = new mongoose.Schema(
     shortCode: {
       type: String,
       unique: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      required: [true, "The user is required"],
     },
     // clicks: {
     //   type: Number,
