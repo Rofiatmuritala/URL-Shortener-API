@@ -11,10 +11,10 @@ import { usersRouteMiddleware } from "../middlewares/userMiddleware.js";
 
 const router = Router();
 
-router.get("/links", usersRouteMiddleware, getAllLinks);
-router.post("/links", usersRouteMiddleware, createShortenedUrl);
-router.get("/links/:shortCode", usersRouteMiddleware, getSingleLink);
-router.delete("/links/:shortCode", usersRouteMiddleware, deleteLink);
-router.get("/links/visit/:shortCode", visitLink);
+router.get("/api/links", usersRouteMiddleware, getAllLinks);
+router.post("/api/links", usersRouteMiddleware, createShortenedUrl);
+router.get("/api/links/:shortCode", usersRouteMiddleware, getSingleLink);
+router.delete("/api/links/:shortCode", usersRouteMiddleware, deleteLink);
+router.get("/:shortCode", visitLink);
 
 export default router;

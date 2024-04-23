@@ -40,7 +40,7 @@ const linkSchema = new mongoose.Schema(
 );
 
 linkSchema.virtual("shortLink").get(function () {
-  return `http://localhost:4000/links/${this.shortCode}`;
+  return `http://localhost:4000/${this.shortCode}`;
 });
 
 // Define a virtual field for clicks

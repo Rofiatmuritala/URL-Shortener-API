@@ -34,8 +34,8 @@ export const createShortenedUrl = async (req, res, next) => {
     req.body.shortCode = shortCode;
     req.body.user = user._id;
 
-    const Link = await Links.create(req.body);
-    res.json({ msg: "This is getting the project", Link: Link });
+    const link = await Links.create(req.body);
+    res.json({ msg: "This is getting the project", link: link });
   } catch (error) {
     next(error);
   }
@@ -43,6 +43,9 @@ export const createShortenedUrl = async (req, res, next) => {
 
 export const visitLink = async (req, res, next) => {
   try {
+    console.log(req.headers.referer);
+
+    console.log(req.get("Referer"));
     const link = await Links.findOne({ shortCode: req.params.shortCode });
 
     // // Updating the clicks of the link by adding 1
