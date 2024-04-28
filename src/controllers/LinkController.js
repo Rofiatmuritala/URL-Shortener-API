@@ -8,6 +8,7 @@ export const getAllLinks = async (req, res, next) => {
     const user = req.user;
 
     const links = await Links.find({ user: user._id })
+      .sort({ createdAt: "desc" })
       .populate("clicks")
       .populate("user");
 
